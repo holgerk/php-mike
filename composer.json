@@ -4,5 +4,11 @@
         "php": ">=5.3.0",
         "holgerk/jiggle": "*"
     },
+    "require-dev": {
+        "holgerk/simple-mock": "*"
+    },
+    "autoload": {
+        "psr-0": { "Mike\\": "src/" }
+    },
     "license": "MIT"
 }
