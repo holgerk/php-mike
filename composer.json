@@ -8,7 +8,8 @@
         "holgerk/simple-mock": "*"
     },
     "autoload": {
-        "psr-0": { "Mike\\": "src/" }
+        "psr-0": {"Mike\\": "src/"},
+        "files": ["src/functions.php"]
     },
     "license": "MIT"
 }

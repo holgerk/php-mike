@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "cf031fd88cbb49419b196d6f171f8941",
+    "hash": "76fe896107440763206889506b21ae6e",
     "packages": [
         {
             "name": "holgerk/jiggle",

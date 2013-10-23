@@ -6,7 +6,7 @@ class MainTest extends SimpleMock_TestCase {
 
     public function setUp() {
         $this->deps = include __DIR__ . '/../src/deps.php';
-        $this->deps->replace('taskFileLoader', 'dummy null');
+        $this->deps->replace('taskLoader', 'dummy null');
     }
 
     public function testWhenNoTaskFileIsFoundProcessIsTerminated() {
@@ -33,8 +33,8 @@ class MainTest extends SimpleMock_TestCase {
             ->never()
             ->create()
         );
-        $this->deps->replace('taskFileLoader', $this->simpleMock('Jiggle\TaskFileLoader')
-            ->expects('load')
+        $this->deps->replace('taskLoader', $this->simpleMock('Jiggle\TaskLoader')
+            ->expects('loadFile')
             ->with('/path/task-file')
             ->create()
         );

@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * desc1
+ */
+task('task1', function() {
+});
+
+desc('desc2');
+task('task2', function() {
+});
+
+task('task3', 'task2', function() {
+});

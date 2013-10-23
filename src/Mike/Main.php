@@ -4,9 +4,9 @@ namespace Mike;
 
 class Main {
 
-    public function __construct($taskFileFinder, $taskFileLoader, $process) {
+    public function __construct($taskFileFinder, $taskLoader, $process) {
         $this->taskFileFinder = $taskFileFinder;
-        $this->taskFileLoader = $taskFileLoader;
+        $this->taskLoader = $taskLoader;
         $this->process = $process;
     }
 
@@ -16,7 +16,7 @@ class Main {
             $this->process->quit();
             return;
         }
-        $this->taskFileLoader->load($taskFile);
+        $this->taskLoader->loadFile($taskFile);
     }
 
 }
