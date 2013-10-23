@@ -28,11 +28,6 @@ class MainTest extends SimpleMock_TestCase {
             ->returns('/path/task-file')
             ->create()
         );
-        $this->deps->replace('process', $this->simpleMock('Jiggle\Process')
-            ->expects('quit')
-            ->never()
-            ->create()
-        );
         $this->deps->replace('taskLoader', $this->simpleMock('Jiggle\TaskLoader')
             ->expects('loadFile')
             ->with('/path/task-file')

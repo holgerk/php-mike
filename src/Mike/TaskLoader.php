@@ -34,6 +34,7 @@ class TaskLoader {
         $this->lastDescription = $text;
     }
 
+    // args: $name [, $dep1 [, $depN... ], $function
     public function task() {
         $args = func_get_args();
         $name = array_shift($args);

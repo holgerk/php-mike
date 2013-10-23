@@ -18,7 +18,7 @@ class Task {
         return $this->description;
     }
 
-    protected function fetchDescriptionFromDocComment() {
+    private function fetchDescriptionFromDocComment() {
         $reflection = new \ReflectionFunction($this->function);
         $comment = $reflection->getDocComment();
         $comment = trim(trim(trim($comment, '/'), '*'));
