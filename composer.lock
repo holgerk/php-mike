@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "holgerk/jiggle",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/holgerk/php-jiggle.git",
-                "reference": "bd8f428dc22af697e04d9663b5a32ead3faeef16"
+                "reference": "54dacf1e7250d9e50091bb792457e234554df3f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/holgerk/php-jiggle/zipball/bd8f428dc22af697e04d9663b5a32ead3faeef16",
-                "reference": "bd8f428dc22af697e04d9663b5a32ead3faeef16",
+                "url": "https://api.github.com/repos/holgerk/php-jiggle/zipball/54dacf1e7250d9e50091bb792457e234554df3f6",
+                "reference": "54dacf1e7250d9e50091bb792457e234554df3f6",
                 "shasum": ""
             },
             "require": {
@@ -32,22 +32,22 @@
             "license": [
                 "MIT"
             ],
-            "time": "2013-10-23 15:09:39"
+            "time": "2013-10-24 19:32:59"
         }
     ],
     "packages-dev": [
         {
             "name": "holgerk/simple-mock",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/holgerk/php-simple-mock.git",
-                "reference": "eff8a1a451bc5f799137c75c1034d8385d36de57"
+                "reference": "4b71e88aed1b69293626863b82569a1038025011"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/holgerk/php-simple-mock/zipball/eff8a1a451bc5f799137c75c1034d8385d36de57",
-                "reference": "eff8a1a451bc5f799137c75c1034d8385d36de57",
+                "url": "https://api.github.com/repos/holgerk/php-simple-mock/zipball/4b71e88aed1b69293626863b82569a1038025011",
+                "reference": "4b71e88aed1b69293626863b82569a1038025011",
                 "shasum": ""
             },
             "require": {
@@ -63,7 +63,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2013-10-23 15:26:25"
+            "time": "2013-10-24 16:46:30"
         }
     ],
     "aliases": [

@@ -4,18 +4,8 @@ namespace Mike;
 
 class TaskLoader {
 
-    static private $instance;
-
-    static public function current() {
-        return self::$instance;
-    }
-
     private $tasks = array();
     private $lastDescription = '';
-
-    public function __construct() {
-        self::$instance = $this;
-    }
 
     public function loadFile($taskFile) {
         require $taskFile;

@@ -5,13 +5,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class TaskFileFinderTest extends SimpleMock_TestCase {
 
     public function setUp() {
-        $this->deps = include __DIR__ . '/../src/deps.php';
+        $container = new Mike\DependencyContainer;
+        $this->deps = $container->getDependencies();
         $this->fixtureDir = __DIR__ . '/fixtures';
         $this->expectedFilePath = $this->fixtureDir . '/dir1/Mikefile';
     }
 
     public function testShouldFindTaskFileInWorkingDirectory() {
-        $this->deps->replace('process', $this->simpleMock('Jiggle\Process')
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')
             ->expects('workingDirectory')
             ->returns($this->fixtureDir . '/dir1')
             ->create()
@@ -20,7 +21,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
     }
 
     public function testShouldFindTaskFileAboveWorkingDirectory() {
-        $this->deps->replace('process', $this->simpleMock('Jiggle\Process')
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')
             ->expects('workingDirectory')
             ->returns($this->fixtureDir . '/dir1/dir2/dir3')
             ->create()
@@ -29,7 +30,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
     }
 
     public function testShouldNotFindTaskFile() {
-        $this->deps->replace('process', $this->simpleMock('Jiggle\Process')
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')
             ->expects('workingDirectory')
             ->returns($this->fixtureDir)
             ->create()

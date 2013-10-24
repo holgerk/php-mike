@@ -5,8 +5,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class TaskLoaderTest extends SimpleMock_TestCase {
 
     public function setUp() {
-        $deps = include __DIR__ . '/../src/deps.php';
-        $this->loader = $deps->taskLoader;
+        $container = new Mike\DependencyContainer;
+        $this->loader = $container->getDependencies()->taskLoader;
         $this->file = __DIR__ . '/fixtures/dir1/Mikefile';
     }
 
