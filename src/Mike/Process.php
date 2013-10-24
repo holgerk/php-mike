@@ -12,4 +12,9 @@ class Process {
         return getcwd();
     }
 
+    public function argv() {
+        global $argv;
+        return $argv;
+    }
+
 }

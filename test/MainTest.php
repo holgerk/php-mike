@@ -36,4 +36,39 @@ class MainTest extends SimpleMock_TestCase {
         );
         $this->deps->main->run();
     }
+
+    public function testThatAllArgumentsAreRead() {
+        $this->findTaskFile();
+        $this->loadTaskFile();
+        $this->deps->replace('argumentReader', $this->simpleMock('Mike\ArgumentReader')
+            ->expects('nextTaskData')
+            ->returns(array('task:name1', array()))
+            ->returns(array('task:name2', array()))
+            ->returns(null)
+            ->create()
+        );
+        $this->deps->main->run();
+    }
+
+
+    // ===============
+    // helper function
+    // ---------------
+
+    private function findTaskFile() {
+        $this->deps->replace('taskFileFinder', $this->simpleMock('Mike\TaskFileFinder')
+            ->expects('find')
+            ->returns('/path/task-file')
+            ->create()
+        );
+    }
+
+    private function loadTaskFile() {
+        $this->deps->replace('taskLoader', $this->simpleMock('Mike\TaskLoader')
+            ->expects('loadFile')
+            ->with('/path/task-file')
+            ->create()
+        );
+    }
+
 }

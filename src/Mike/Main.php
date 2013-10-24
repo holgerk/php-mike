@@ -4,10 +4,11 @@ namespace Mike;
 
 class Main {
 
-    public function __construct($taskFileFinder, $taskLoader, $process) {
+    public function __construct($taskFileFinder, $taskLoader, $process, $argumentReader) {
         $this->taskFileFinder = $taskFileFinder;
-        $this->taskLoader = $taskLoader;
-        $this->process = $process;
+        $this->taskLoader     = $taskLoader;
+        $this->process        = $process;
+        $this->argumentReader = $argumentReader;
     }
 
     public function run() {
@@ -17,6 +18,8 @@ class Main {
             return;
         }
         $this->taskLoader->loadFile($taskFile);
+        while (list($taskName, $taskParams) = $this->argumentReader->nextTaskData()) {
+        }
     }
 
 }

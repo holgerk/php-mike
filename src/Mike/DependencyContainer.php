@@ -18,6 +18,7 @@ class DependencyContainer {
         $this->jiggle->taskFileFinder = $this->jiggle->createFactory('Mike\TaskFileFinder');
         $this->jiggle->process        = $this->jiggle->createFactory('Mike\Process');
         $this->jiggle->taskLoader     = $this->jiggle->createFactory('Mike\TaskLoader');
+        $this->jiggle->argumentReader = $this->jiggle->createFactory('Mike\ArgumentReader');
 
         self::$instance = $this;
     }
