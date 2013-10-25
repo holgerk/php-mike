@@ -10,28 +10,22 @@ class TaskLoaderTest extends SimpleMock_TestCase {
         $this->file = __DIR__ . '/fixtures/dir1/Mikefile';
     }
 
-    public function testThatTasksAreLoaded() {
-        $this->loader->loadFile($this->file);
-        $tasks = $this->loader->getTasks();
-        $this->assertEquals(3, count($tasks));
-    }
-
     public function testThatDescriptionIsFetchedFromDocComment() {
         $this->loader->loadFile($this->file);
-        $tasks = $this->loader->getTasks();
-        $this->assertEquals('desc1', $tasks['task1']->getDescription());
+        $task = $this->loader->getTask('task1');
+        $this->assertEquals('desc1', $task->getDescription());
     }
 
     public function testThatDescriptionIsFilledByDescCall() {
         $this->loader->loadFile($this->file);
-        $tasks = $this->loader->getTasks();
-        $this->assertEquals('desc2', $tasks['task2']->getDescription());
+        $task = $this->loader->getTask('task2');
+        $this->assertEquals('desc2', $task->getDescription());
     }
 
     public function testThatDescriptionIsEmpty() {
         $this->loader->loadFile($this->file);
-        $tasks = $this->loader->getTasks();
-        $this->assertEquals('', $tasks['task3']->getDescription());
+        $task = $this->loader->getTask('task3');
+        $this->assertEquals('', $task->getDescription());
     }
 
 }

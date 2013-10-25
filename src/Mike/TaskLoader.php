@@ -11,8 +11,8 @@ class TaskLoader {
         require $taskFile;
     }
 
-    public function getTasks() {
-        return $this->tasks;
+    public function getTask($taskName) {
+        return $this->tasks[$taskName];
     }
 
 
