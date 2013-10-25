@@ -41,10 +41,11 @@ class MainTest extends SimpleMock_TestCase {
         $this->findTaskFile();
         $this->loadTaskFile();
         $this->deps->replace('argumentReader', $this->simpleMock('Mike\ArgumentReader')
-            ->expects('nextTaskData')
-            ->returns(array('task:name1', array()))
-            ->returns(array('task:name2', array()))
-            ->returns(null)
+            ->expects('getTasks')
+            ->returns(array('task1', 'task2'))
+            ->expects('getTaskArgs')
+            ->with('task1')
+            ->with('task2')
             ->create()
         );
         $this->deps->main->run();

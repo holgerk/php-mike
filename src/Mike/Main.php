@@ -18,7 +18,8 @@ class Main {
             return;
         }
         $this->taskLoader->loadFile($taskFile);
-        while (list($taskName, $taskParams) = $this->argumentReader->nextTaskData()) {
+        foreach ($this->argumentReader->getTasks() as $taskName) {
+            $taskParams = $this->argumentReader->getTaskArgs($taskName);
         }
     }
 

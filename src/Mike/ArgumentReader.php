@@ -7,18 +7,17 @@ class ArgumentReader {
     public function __construct($process) {
         $this->process = $process;
         $this->argv = array_splice($process->argv(), 1);
-        $this->taskDataList = array();
+        $this->taskArgs = array();
         $this->position = 0;
         $this->parseArgv();
     }
 
-    public function nextTaskData() {
-        if (!isset($this->taskDataList[$this->position])) {
-            return null;
-        }
-        $taskData = $this->taskDataList[$this->position];
-        $this->position++;
-        return $taskData;
+    public function getTasks() {
+        return array_keys($this->taskArgs);
+    }
+
+    public function getTaskArgs($taskName) {
+        return $this->taskArgs[$taskName];
     }
 
     private function parseArgv() {
@@ -28,11 +27,11 @@ class ArgumentReader {
             } else if (strpos($arg, '=') !== false) {
                 // param
                 list($name, $value) = explode('=', $arg, 2);
-                $taskData[1][$name] = $value;
+                $args[$name] = $value;
             } else {
                 // task
-                $this->taskDataList[] = array($arg, array());
-                $taskData = &$this->taskDataList[count($this->taskDataList) - 1];
+                $this->taskArgs[$arg] = array();
+                $args = &$this->taskArgs[$arg];
             }
         }
     }

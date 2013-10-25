@@ -16,13 +16,14 @@ class ArgumentReaderTest extends SimpleMock_TestCase {
             ->create()
         );
         $this->assertEquals(
-            array('test', array('filter' => 'db')),
-            $this->deps->argumentReader->nextTaskData());
+            array('test', 'clean'),
+            $this->deps->argumentReader->getTasks());
         $this->assertEquals(
-            array('clean', array()),
-            $this->deps->argumentReader->nextTaskData());
-        $this->assertNull(
-            $this->deps->argumentReader->nextTaskData());
+            array('filter' => 'db'),
+            $this->deps->argumentReader->getTaskArgs('test'));
+        $this->assertEquals(
+            array(),
+            $this->deps->argumentReader->getTaskArgs('clean'));
     }
 
 }
