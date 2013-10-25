@@ -51,6 +51,13 @@ class MainTest extends SimpleMock_TestCase {
         $this->deps->main->run();
     }
 
+    public function testThatTasksFetchedFromLoader() {
+        $this->findTaskFile();
+        $this->loadTaskFile();
+        $this->readArguments();
+        $this->deps->main->run();
+    }
+
 
     // ===============
     // helper function
@@ -68,6 +75,17 @@ class MainTest extends SimpleMock_TestCase {
         $this->deps->replace('taskLoader', $this->simpleMock('Mike\TaskLoader')
             ->expects('loadFile')
             ->with('/path/task-file')
+            ->create()
+        );
+    }
+
+    private function readArguments() {
+        $this->deps->replace('argumentReader', $this->simpleMock('Mike\ArgumentReader')
+            ->expects('getTasks')
+            ->returns(array('task1', 'task2'))
+            ->expects('getTaskArgs')
+            ->with('task1')
+            ->with('task2')
             ->create()
         );
     }
