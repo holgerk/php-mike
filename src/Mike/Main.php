@@ -27,7 +27,11 @@ class Main {
         foreach ($this->argumentReader->getTasks() as $taskName) {
             $taskParams = $this->argumentReader->getTaskArgs($taskName);
             $task = $this->taskLoader->getTask($taskName);
-            $this->taskRunner->run($task);
+            if ($task) {
+                $this->taskRunner->run($task);
+            } else {
+                // todo
+            }
         }
     }
 
