@@ -23,18 +23,7 @@ class Task {
     }
 
     public function run($params) {
-        $callParams = array();
-        foreach ($this->getParams() as $param) {
-            $paramName = $param->getName();
-            if (isset($params[$paramName])) {
-                $callParams[] = $params[$paramName];
-            } else if ($param->isOptional()) {
-                $callParams[] = $param->getDefaultValue();
-            } else {
-                throw new Exception("Missing param: $paramName for task: {$this->name}!");
-            }
-        }
-        return call_user_func_array($this->function, $callParams);
+        return call_user_func_array($this->function, $params);
     }
 
     public function getParams() {
