@@ -24,10 +24,11 @@ class MainTest extends SimpleMock_TestCase {
     }
 
     public function testTaskIsExecuted() {
-        task('test', function() use(&$wasRun) { $wasRun = true; });
-        $this->setEnv(array('shellArgs' => array('test')));
+        $result = null;
+        task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });
+        $this->setEnv(array('shellArgs' => array('test', 'p1=40', 'p2=2')));
         $this->deps->main->run();
-        $this->assertTrue($wasRun);
+        $this->assertEquals(42, $result);
     }
 
 

@@ -25,9 +25,8 @@ class Main {
         }
         $this->taskLoader->loadFile($taskFile);
         foreach ($this->argumentReader->getTasks() as $taskName) {
-            $this->taskRunner->run($taskName);
-            // $taskParams = $this->argumentReader->getTaskArgs($taskName);
-            // $task = $this->taskLoader->getTask($taskName);
+            $taskParams = $this->argumentReader->getTaskArgs($taskName);
+            $this->taskRunner->run($taskName, $taskParams);
         }
     }
 

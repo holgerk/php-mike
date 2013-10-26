@@ -24,4 +24,11 @@ class TaskRunnerTest extends SimpleMock_TestCase {
         $this->assertEquals(array('build', 'test'), $taskChain);
     }
 
+    public function testThatTaskIsRunWithParams() {
+        $result = null;
+        task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });
+        $this->deps->taskRunner->run('test', array('p1' => 40, 'p2' => 2));
+        $this->assertEquals(42, $result);
+    }
+
 }
