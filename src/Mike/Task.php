@@ -18,6 +18,10 @@ class Task {
         return $this->description;
     }
 
+    public function getDependencies() {
+        return $this->dependencies;
+    }
+
     public function run() {
         return call_user_func_array($this->function, array());
     }
