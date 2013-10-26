@@ -12,6 +12,9 @@ class TaskLoader {
     }
 
     public function getTask($taskName) {
+        if (!isset($this->tasks[$taskName])) {
+            return null;
+        }
         return $this->tasks[$taskName];
     }
 
@@ -35,7 +38,7 @@ class TaskLoader {
             'dependencies' => $args,
             'function'     => $function
         ));
-
+        return $this->tasks[$name];
     }
 
     // ==============================================================================

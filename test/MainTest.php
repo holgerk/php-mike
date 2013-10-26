@@ -13,7 +13,7 @@ class MainTest extends SimpleMock_TestCase {
     public function testWhenNoTaskFileIsFoundProcessIsTerminated() {
         $this->deps->replace('taskFileFinder', $this->simpleMock('Mike\TaskFileFinder')
             ->expects('find')
-            ->returns(null)
+                ->returns(null)
             ->create()
         );
         $this->deps->replace('process', $this->simpleMock('Mike\Process')
@@ -23,38 +23,57 @@ class MainTest extends SimpleMock_TestCase {
         $this->deps->main->run();
     }
 
-    public function testWhenTaskFileIsFoundItIsLoaded() {
+    public function SKIPPtestWhenTaskFileIsFoundItIsLoaded() {
         $this->deps->replace('taskFileFinder', $this->simpleMock('Mike\TaskFileFinder')
             ->expects('find')
-            ->returns('/path/task-file')
+                ->returns('/path/task-file')
             ->create()
         );
         $this->deps->replace('taskLoader', $this->simpleMock('Mike\TaskLoader')
             ->expects('loadFile')
-            ->with('/path/task-file')
+                ->with('/path/task-file')
             ->create()
         );
         $this->deps->main->run();
     }
 
-    public function testThatAllArgumentsAreRead() {
+    public function SKIPPtestThatAllArgumentsAreRead() {
         $this->findTaskFile();
         $this->loadTaskFile();
         $this->deps->replace('argumentReader', $this->simpleMock('Mike\ArgumentReader')
             ->expects('getTasks')
-            ->returns(array('task1', 'task2'))
+                ->returns(array('task1', 'task2'))
             ->expects('getTaskArgs')
-            ->with('task1')
-            ->with('task2')
+                ->with('task1')
+                ->with('task2')
             ->create()
         );
         $this->deps->main->run();
     }
 
-    public function testThatTasksFetchedFromLoader() {
+    public function SKIPPtestThatTasksFetchedFromLoader() {
         $this->findTaskFile();
-        $this->loadTaskFile();
+        $this->deps->replace('taskLoader', $this->simpleMock('Mike\TaskLoader')
+            ->expects('loadFile')
+            ->expects('getTask')
+                ->with('task1')
+                ->with('task2')
+            ->create()
+        );
         $this->readArguments();
+        $this->deps->main->run();
+    }
+
+    public function SKIPPtestThatFetchedTasksAreExecuted() {
+        $this->findTaskFile();
+        $this->loadAndFetchTasks();
+        $this->readArguments();
+        $this->deps->replace('taskRunner', $this->simpleMock('Mike\TaskRunner')
+            ->expects('run')
+                ->with('task-obj-1')
+                ->with('task-obj-2')
+            ->create()
+        );
         $this->deps->main->run();
     }
 
@@ -66,7 +85,7 @@ class MainTest extends SimpleMock_TestCase {
     private function findTaskFile() {
         $this->deps->replace('taskFileFinder', $this->simpleMock('Mike\TaskFileFinder')
             ->expects('find')
-            ->returns('/path/task-file')
+                ->returns('/path/task-file')
             ->create()
         );
     }
@@ -74,7 +93,7 @@ class MainTest extends SimpleMock_TestCase {
     private function loadTaskFile() {
         $this->deps->replace('taskLoader', $this->simpleMock('Mike\TaskLoader')
             ->expects('loadFile')
-            ->with('/path/task-file')
+                ->with('/path/task-file')
             ->create()
         );
     }
@@ -82,10 +101,22 @@ class MainTest extends SimpleMock_TestCase {
     private function readArguments() {
         $this->deps->replace('argumentReader', $this->simpleMock('Mike\ArgumentReader')
             ->expects('getTasks')
-            ->returns(array('task1', 'task2'))
+                ->returns(array('task1', 'task2'))
             ->expects('getTaskArgs')
-            ->with('task1')
-            ->with('task2')
+                ->with('task1')
+                ->with('task2')
+            ->create()
+        );
+    }
+
+    private function loadAndFetchTasks() {
+        $this->deps->replace('taskLoader', $this->simpleMock('Mike\TaskLoader')
+            ->expects('loadFile')
+            ->expects('getTask')
+                ->with('task1')
+                ->returns('task-obj-1')
+                ->with('task2')
+                ->returns('task-obj-2')
             ->create()
         );
     }

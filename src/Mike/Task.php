@@ -18,6 +18,10 @@ class Task {
         return $this->description;
     }
 
+    public function run() {
+        return call_user_func_array($this->function, array());
+    }
+
     private function fetchDescriptionFromDocComment() {
         $reflection = new \ReflectionFunction($this->function);
         $comment = $reflection->getDocComment();
