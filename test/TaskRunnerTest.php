@@ -31,4 +31,15 @@ class TaskRunnerTest extends SimpleMock_TestCase {
         $this->assertEquals(42, $result);
     }
 
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage circular dependency: a > b > c > b!
+     */
+    public function testThatRunnerThrowsOnCircularDependencies() {
+        task('a', 'b', function() {});
+        task('b', 'c', function() {});
+        task('c', 'b', function() {});
+        $this->deps->taskRunner->run('a');
+    }
+
 }
