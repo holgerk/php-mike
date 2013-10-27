@@ -5,10 +5,12 @@ namespace Mike;
 class ArgumentReader {
 
     public function __construct($process) {
-        $this->process = $process;
-        $this->argv = array_splice($process->argv(), 1);
+        $this->argv = $process->argv();
+        $this->argv = array_splice($this->argv, 1);
+
         $this->taskArgs = array();
         $this->position = 0;
+
         $this->parseArgv();
     }
 
