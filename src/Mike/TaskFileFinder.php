@@ -23,7 +23,7 @@ class TaskFileFinder {
             }
             $dir = dirname($dir);
         } while ($path != '//' . $this->fileName);
-        call_user_func_array($this->throwUsageError, array("No {$this->fileName} found!"));
+        call_user_func($this->throwUsageError, "No {$this->fileName} found!");
     }
 
 }

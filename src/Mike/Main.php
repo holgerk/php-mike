@@ -10,20 +10,29 @@ class Main {
             $process,
             $argumentReader,
             $taskRunner,
-            $terminal) {
-        $this->taskFileFinder = $taskFileFinder;
-        $this->taskLoader     = $taskLoader;
-        $this->process        = $process;
-        $this->argumentReader = $argumentReader;
-        $this->taskRunner     = $taskRunner;
-        $this->terminal       = $terminal;
+            $terminal,
+            $throwUsageError) {
+        $this->taskFileFinder  = $taskFileFinder;
+        $this->taskLoader      = $taskLoader;
+        $this->process         = $process;
+        $this->argumentReader  = $argumentReader;
+        $this->taskRunner      = $taskRunner;
+        $this->terminal        = $terminal;
+        $this->throwUsageError = $throwUsageError;
     }
 
     public function run() {
         try {
             $taskFile = $this->taskFileFinder->find();
             $this->taskLoader->loadFile($taskFile);
-            foreach ($this->argumentReader->getTasks() as $taskName) {
+            $taskNames = $this->argumentReader->getTasks();
+            if (count($taskNames) == 0 && $this->taskLoader->taskExist('default')) {
+                $taskNames[] = 'default';
+            }
+            if (count($taskNames) == 0) {
+                call_user_func($this->throwUsageError, 'No task given!');
+            }
+            foreach ($taskNames as $taskName) {
                 $taskParams = $this->argumentReader->getTaskArgs($taskName);
                 $this->taskRunner->run($taskName, $taskParams);
             }

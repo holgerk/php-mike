@@ -28,12 +28,37 @@ class MainTest extends SimpleMock_TestCase {
         $this->deps->main->run();
     }
 
-    public function testTaskIsExecuted() {
+    public function testWhenNoTaskIsGivenErrorIsShown() {
+        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')
+            ->expects('errorMessage')
+                ->with($this->stringContains('No task given!'))
+            ->create()
+        );
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')
+            ->expects('argv')
+                ->returns(array('script.php'))
+            ->expects('workingDirectory')
+                ->returns($this->workingDirectory)
+            ->expects('quit')
+            ->create()
+        );
+        $this->deps->main->run();
+    }
+
+    public function testTaskIsExecutedWithParams() {
         $result = null;
         task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });
         $this->setEnv(array('shellArgs' => array('test', 'p1=40', 'p2=2')));
         $this->deps->main->run();
         $this->assertEquals(42, $result);
+    }
+
+    public function testDefaultTaskIsExecutedWhenNoTaskIsGiven() {
+        $wasRun = false;
+        task('default', function() use(&$wasRun) { $wasRun = true; });
+        $this->setEnv(array('shellArgs' => array()));
+        $this->deps->main->run();
+        $this->assertTrue($wasRun);
     }
 
 
@@ -53,9 +78,9 @@ class MainTest extends SimpleMock_TestCase {
 
         $this->deps->replace('process', $this->simpleMock('Mike\Process')
             ->expects('argv')
-            ->returns($shellArgs)
+                ->returns($shellArgs)
             ->expects('workingDirectory')
-            ->returns($workingDirectory)
+                ->returns($workingDirectory)
             ->create()
         );
     }

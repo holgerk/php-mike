@@ -17,9 +17,16 @@ class TaskLoader {
 
     public function getTask($taskName) {
         if (!isset($this->tasks[$taskName])) {
-            call_user_func_array($this->throwUsageError, array("Missing task: $taskName"));
+            call_user_func($this->throwUsageError, "Missing task: $taskName");
         }
         return $this->tasks[$taskName];
+    }
+
+    public function taskExist($taskName) {
+        if (!isset($this->tasks[$taskName])) {
+            return false;
+        }
+        return true;
     }
 
 
