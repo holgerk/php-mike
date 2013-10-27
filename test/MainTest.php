@@ -32,9 +32,9 @@ class MainTest extends SimpleMock_TestCase {
     }
 
 
-    // ===============
-    // helper function
-    // ---------------
+    // ================
+    // helper functions
+    // ----------------
 
     private function setEnv($options) {
         $shellArgs = array('script.php');
