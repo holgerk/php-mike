@@ -31,6 +31,20 @@ class TaskRunnerTest extends SimpleMock_TestCase {
         $this->assertEquals(42, $result);
     }
 
+    public function testWhenParamIsMissingItFetchedFromInteractiveParamReader() {
+        $result = null;
+        task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });
+        $this->deps->replace('interactiveParamReader',
+            $this->simpleMock('Mike\InteractiveParamReader')
+                ->expects('read')
+                    ->with('p2')
+                    ->returns('2')
+                ->create()
+        );
+        $this->deps->taskRunner->run('test', array('p1' => 40));
+        $this->assertEquals(42, $result);
+    }
+
     /**
      * @expectedException Exception
      * @expectedExceptionMessage circular dependency: a > b > c > b!

@@ -17,4 +17,8 @@ class Process {
         return $argv;
     }
 
+    public function readline($message) {
+        return readline($message);
+    }
+
 }

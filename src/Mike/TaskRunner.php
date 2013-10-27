@@ -4,8 +4,9 @@ namespace Mike;
 
 class TaskRunner {
 
-    public function __construct($taskLoader) {
+    public function __construct($taskLoader, $interactiveParamReader) {
         $this->taskLoader = $taskLoader;
+        $this->interactiveParamReader = $interactiveParamReader;
         $this->taskStack = array();
     }
 
@@ -31,12 +32,13 @@ class TaskRunner {
     private function fetchTaskParams($task, $callArgs) {
         $params = array();
         foreach ($task->getParams() as $param) {
-            if (isset($callArgs[$param->getName()])) {
-                $params[] = $callArgs[$param->getName()];
+            $paramName = $param->getName();
+            if (isset($callArgs[$paramName])) {
+                $params[] = $callArgs[$paramName];
             } else if ($param->isOptional()) {
                 $params[] = $param->getDefaultValue();
             } else {
-                throw new \Exception("missing task param: " . $param->getName());
+                $params[] = $this->interactiveParamReader->read($paramName);
             }
         }
         return $params;
