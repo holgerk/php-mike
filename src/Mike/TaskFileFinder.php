@@ -4,8 +4,10 @@ namespace Mike;
 
 class TaskFileFinder {
 
-    public function __construct($process) {
+    public function __construct($process, $throwUsageError) {
         $this->process = $process;
+        $this->throwUsageError = $throwUsageError;
+
         $this->fileName = 'Mikefile';
     }
 
@@ -21,7 +23,7 @@ class TaskFileFinder {
             }
             $dir = dirname($dir);
         } while ($path != '//' . $this->fileName);
-        return null;
+        call_user_func_array($this->throwUsageError, array("No {$this->fileName} found!"));
     }
 
 }

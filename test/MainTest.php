@@ -13,7 +13,12 @@ class MainTest extends SimpleMock_TestCase {
     public function testWhenNoTaskFileIsFoundProcessIsTerminated() {
         $this->deps->replace('taskFileFinder', $this->simpleMock('Mike\TaskFileFinder')
             ->expects('find')
-                ->returns(null)
+                ->raises(new Mike\UsageError('No Mikefile found!'))
+            ->create()
+        );
+        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')
+            ->expects('errorMessage')
+                ->with($this->stringContains('No Mikefile found!'))
             ->create()
         );
         $this->deps->replace('process', $this->simpleMock('Mike\Process')

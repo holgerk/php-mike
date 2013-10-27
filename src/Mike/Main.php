@@ -9,24 +9,27 @@ class Main {
             $taskLoader,
             $process,
             $argumentReader,
-            $taskRunner) {
+            $taskRunner,
+            $terminal) {
         $this->taskFileFinder = $taskFileFinder;
         $this->taskLoader     = $taskLoader;
         $this->process        = $process;
         $this->argumentReader = $argumentReader;
         $this->taskRunner     = $taskRunner;
+        $this->terminal       = $terminal;
     }
 
     public function run() {
-        $taskFile = $this->taskFileFinder->find();
-        if (!$taskFile) {
-            $this->process->quit();
-            return;
-        }
-        $this->taskLoader->loadFile($taskFile);
-        foreach ($this->argumentReader->getTasks() as $taskName) {
-            $taskParams = $this->argumentReader->getTaskArgs($taskName);
-            $this->taskRunner->run($taskName, $taskParams);
+        try {
+            $taskFile = $this->taskFileFinder->find();
+            $this->taskLoader->loadFile($taskFile);
+            foreach ($this->argumentReader->getTasks() as $taskName) {
+                $taskParams = $this->argumentReader->getTaskArgs($taskName);
+                $this->taskRunner->run($taskName, $taskParams);
+            }
+        } catch (UsageError $e) {
+            $this->terminal->errorMessage($e->getMessage());
+            $this->process->quit(1);
         }
     }
 

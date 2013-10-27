@@ -29,6 +29,10 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
         $this->assertEquals($this->expectedFilePath, $this->deps->taskFileFinder->find());
     }
 
+    /**
+     * @expectedException Mike\UsageError
+     * @expectedExceptionMessage No Mikefile found!
+     */
     public function testShouldNotFindTaskFile() {
         $this->deps->replace('process', $this->simpleMock('Mike\Process')
             ->expects('workingDirectory')

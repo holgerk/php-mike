@@ -4,8 +4,8 @@ namespace Mike;
 
 class Process {
 
-    public function quit() {
-        exit;
+    public function quit($exitCode = 0) {
+        exit($exitCode);
     }
 
     public function workingDirectory() {
