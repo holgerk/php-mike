@@ -7,13 +7,17 @@ class TaskLoader {
     private $tasks = array();
     private $lastDescription = '';
 
+    public function __construct($throwUsageError) {
+        $this->throwUsageError = $throwUsageError;
+    }
+
     public function loadFile($taskFile) {
         require $taskFile;
     }
 
     public function getTask($taskName) {
         if (!isset($this->tasks[$taskName])) {
-            return null;
+            call_user_func_array($this->throwUsageError, array("Missing task: $taskName"));
         }
         return $this->tasks[$taskName];
     }

@@ -13,7 +13,7 @@ class Terminal {
         $redBg = "\033[1;41m";
         $whiteBold = "\033[1;37m";
         $reset = "\033[0m";
-        echo "$redBg$whiteBold$clearLine $message \n$reset";
+        echo "$redBg$whiteBold$clearLine$message\n$reset";
     }
 
 }

@@ -46,8 +46,8 @@ class TaskRunnerTest extends SimpleMock_TestCase {
     }
 
     /**
-     * @expectedException Exception
-     * @expectedExceptionMessage circular dependency: a > b > c > b!
+     * @expectedException Mike\UsageError
+     * @expectedExceptionMessage Circular dependencies: a > b > c > b!
      */
     public function testThatRunnerThrowsOnCircularDependencies() {
         task('a', 'b', function() {});

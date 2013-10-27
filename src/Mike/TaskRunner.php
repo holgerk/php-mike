@@ -4,23 +4,21 @@ namespace Mike;
 
 class TaskRunner {
 
-    public function __construct($taskLoader, $interactiveParamReader) {
+    public function __construct($taskLoader, $interactiveParamReader, $throwUsageError) {
         $this->taskLoader = $taskLoader;
         $this->interactiveParamReader = $interactiveParamReader;
+        $this->throwUsageError = $throwUsageError;
         $this->taskStack = array();
     }
 
     public function run($taskName, $args = array()) {
         if (in_array($taskName, $this->taskStack)) {
             $chain = implode(' > ', $this->taskStack) . " > $taskName";
-            throw new \Exception("circular dependency: $chain!");
+            call_user_func_array($this->throwUsageError, array("Circular dependencies: $chain!"));
         }
         $this->taskStack[] = $taskName;
 
         $task = $this->taskLoader->getTask($taskName);
-        if (!$task) {
-            throw new \Exception("missing task: $taskName!");
-        }
         foreach ($task->getDependencies() as $dependency) {
             $this->run($dependency, $args);
         }

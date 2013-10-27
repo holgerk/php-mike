@@ -28,4 +28,13 @@ class TaskLoaderTest extends SimpleMock_TestCase {
         $this->assertEquals('', $task->getDescription());
     }
 
+    /**
+     * @expectedException Mike\UsageError
+     * @expectedExceptionMessage Missing task: task42
+     */
+    public function testMissingTaskException() {
+        $this->loader->loadFile($this->file);
+        $task = $this->loader->getTask('task42');
+    }
+
 }

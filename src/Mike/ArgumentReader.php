@@ -19,6 +19,9 @@ class ArgumentReader {
     }
 
     public function getTaskArgs($taskName) {
+        if (!isset($this->taskArgs[$taskName])) {
+            return array();
+        }
         return $this->taskArgs[$taskName];
     }
 
