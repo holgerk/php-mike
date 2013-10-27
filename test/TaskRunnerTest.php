@@ -31,7 +31,7 @@ class TaskRunnerTest extends SimpleMock_TestCase {
         $this->assertEquals(42, $result);
     }
 
-    public function testWhenParamIsMissingItFetchedFromInteractiveParamReader() {
+    public function testWhenParamIsMissingItIsFetchedFromInteractiveParamReader() {
         $result = null;
         task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });
         $this->deps->replace('interactiveParamReader',
