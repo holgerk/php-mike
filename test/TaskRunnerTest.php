@@ -16,6 +16,14 @@ class TaskRunnerTest extends SimpleMock_TestCase {
         $this->assertTrue($wasRun);
     }
 
+    public function testTaskWithoutFunctionRunItsDeps() {
+        $wasRun = false;
+        task('test', function() use(&$wasRun) { $wasRun = true; });
+        task('default', 'test');
+        $this->deps->taskRunner->run('default');
+        $this->assertTrue($wasRun);
+    }
+
     public function testThatDependentTaskIsRun() {
         $taskChain = array();
         task('build', function() use(&$taskChain) { $taskChain[] = 'build'; });

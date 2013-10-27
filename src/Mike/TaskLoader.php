@@ -43,6 +43,10 @@ class TaskLoader {
         $args = func_get_args();
         $name = array_shift($args);
         $function = array_pop($args);
+        if (!is_callable($function)) {
+            $args[] = $function;
+            $function = null;
+        }
         $this->tasks[$name] = new Task(array(
             'name'         => $name,
             'description'  => $this->getTaskDescription(),

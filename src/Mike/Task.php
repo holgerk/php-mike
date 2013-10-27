@@ -23,15 +23,24 @@ class Task {
     }
 
     public function run($params) {
+        if (!$this->function) {
+            return null;
+        }
         return call_user_func_array($this->function, $params);
     }
 
     public function getParams() {
+        if (!$this->function) {
+            return array();
+        }
         $reflection = new \ReflectionFunction($this->function);
         return $reflection->getParameters();
     }
 
     private function fetchDescriptionFromDocComment() {
+        if (!$this->function) {
+            return '';
+        }
         $reflection = new \ReflectionFunction($this->function);
         $comment = $reflection->getDocComment();
         $comment = trim(trim(trim($comment, '/'), '*'));
