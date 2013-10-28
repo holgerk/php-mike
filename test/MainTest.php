@@ -22,10 +22,12 @@ class MainTest extends SimpleMock_TestCase {
             ->create()
         );
         $this->deps->replace('process', $this->simpleMock('Mike\Process')
+            ->expects('argv')
+                ->returns(array('script.php'))
             ->expects('quit')
             ->create()
         );
-        $this->deps->main->run();
+        call_user_func($this->deps->runApplication);
     }
 
     public function testWhenNoTaskIsGivenErrorIsShown() {
@@ -42,14 +44,28 @@ class MainTest extends SimpleMock_TestCase {
             ->expects('quit')
             ->create()
         );
-        $this->deps->main->run();
+        call_user_func($this->deps->runApplication);
+    }
+
+    public function testWhenHelpFlagIsSetHelpIsShown() {
+        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')
+            ->expects('helpMessage')
+            ->create()
+        );
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')
+            ->expects('argv')
+                ->returns(array('script.php', '-h'))
+            ->expects('quit')
+            ->create()
+        );
+        call_user_func($this->deps->runApplication);
     }
 
     public function testTaskIsExecutedWithParams() {
         $result = null;
         task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });
         $this->setEnv(array('shellArgs' => array('test', 'p1=40', 'p2=2')));
-        $this->deps->main->run();
+        call_user_func($this->deps->runApplication);
         $this->assertEquals(42, $result);
     }
 
@@ -57,7 +73,7 @@ class MainTest extends SimpleMock_TestCase {
         $wasRun = false;
         task('default', function() use(&$wasRun) { $wasRun = true; });
         $this->setEnv(array('shellArgs' => array()));
-        $this->deps->main->run();
+        call_user_func($this->deps->runApplication);
         $this->assertTrue($wasRun);
     }
 

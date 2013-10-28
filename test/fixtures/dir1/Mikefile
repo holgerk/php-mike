@@ -11,3 +11,5 @@ task('task2', function() {});
 task('task3', 'task2', function() {});
 
 task('task4', function($param1) {});
+
+task('task5', 'task1');

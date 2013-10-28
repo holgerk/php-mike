@@ -22,23 +22,24 @@ class Main {
     }
 
     public function run() {
-        try {
-            $taskFile = $this->taskFileFinder->find();
-            $this->taskLoader->loadFile($taskFile);
-            $taskNames = $this->argumentReader->getTasks();
-            if (count($taskNames) == 0 && $this->taskLoader->taskExist('default')) {
-                $taskNames[] = 'default';
-            }
-            if (count($taskNames) == 0) {
-                call_user_func($this->throwUsageError, 'No task given!');
-            }
-            foreach ($taskNames as $taskName) {
-                $taskParams = $this->argumentReader->getTaskArgs($taskName);
-                $this->taskRunner->run($taskName, $taskParams);
-            }
-        } catch (UsageError $e) {
-            $this->terminal->errorMessage($e->getMessage());
-            $this->process->quit(1);
+        if ($this->argumentReader->isFlagSet('help')) {
+            $this->terminal->helpMessage();
+            $this->process->quit(0);
+            return;
+        }
+
+        $taskFile = $this->taskFileFinder->find();
+        $this->taskLoader->loadFile($taskFile);
+        $taskNames = $this->argumentReader->getTasks();
+        if (count($taskNames) == 0 && $this->taskLoader->taskExist('default')) {
+            $taskNames[] = 'default';
+        }
+        if (count($taskNames) == 0) {
+            call_user_func($this->throwUsageError, 'No task given!');
+        }
+        foreach ($taskNames as $taskName) {
+            $taskParams = $this->argumentReader->getTaskArgs($taskName);
+            $this->taskRunner->run($taskName, $taskParams);
         }
     }
 

@@ -16,6 +16,10 @@ class Terminal {
         echo "$redBg$whiteBold$clearLine$message\n$reset";
     }
 
+    public function helpMessage() {
+        echo "mike [flags] [tasks]\n";
+    }
+
 }
 /*
 # Reset
