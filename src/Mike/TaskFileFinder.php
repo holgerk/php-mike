@@ -11,18 +11,16 @@ class TaskFileFinder {
         $this->fileName = 'Mikefile';
     }
 
-    /**
-     * @todo make find file windows compatible
-     */
     public function find() {
         $dir = $this->process->workingDirectory();
         do {
+            $currentDir = $dir;
             $path = $dir . '/' . $this->fileName;
             if (file_exists($path)) {
                 return $path;
             }
             $dir = dirname($dir);
-        } while ($path != '//' . $this->fileName);
+        } while ($currentDir != $dir);
         call_user_func($this->throwUsageError, "No {$this->fileName} found!");
     }
 
