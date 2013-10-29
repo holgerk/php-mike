@@ -30,6 +30,13 @@ class Main {
 
         $taskFile = $this->taskFileFinder->find();
         $this->taskLoader->loadFile($taskFile);
+
+        if ($this->argumentReader->isFlagSet('tasks')) {
+            $this->terminal->showTasks();
+            $this->process->quit(0);
+            return;
+        }
+
         $taskNames = $this->argumentReader->getTasks();
         if (count($taskNames) == 0 && $this->taskLoader->taskExist('default')) {
             $taskNames[] = 'default';

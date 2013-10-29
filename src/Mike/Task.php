@@ -11,6 +11,10 @@ class Task {
         $this->function     = $args['function'];
     }
 
+    public function getName() {
+        return $this->name;
+    }
+
     public function getDescription() {
         if (!$this->description) {
             $this->fetchDescriptionFromDocComment();

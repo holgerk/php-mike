@@ -4,8 +4,9 @@ namespace Mike;
 
 class Terminal {
 
-    public function __construct($process) {
+    public function __construct($process, $taskLoader) {
         $this->process = $process;
+        $this->taskLoader = $taskLoader;
     }
 
     public function errorMessage($message) {
@@ -18,6 +19,15 @@ class Terminal {
 
     public function helpMessage() {
         echo "mike [flags] [tasks]\n";
+    }
+
+    public function showTasks() {
+        $tasks = $this->taskLoader->getTasks();
+        $output = '';
+        foreach ($tasks as $task) {
+            $output .= sprintf("%s %s\n", $task->getName(), $task->getDescription());
+        }
+        $this->process->output($output);
     }
 
 }

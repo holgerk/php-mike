@@ -24,4 +24,8 @@ class Process {
         return readline($message);
     }
 
+    public function output($message) {
+        echo $message;
+    }
+
 }

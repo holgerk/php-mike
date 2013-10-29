@@ -37,4 +37,11 @@ class TaskLoaderTest extends SimpleMock_TestCase {
         $task = $this->loader->getTask('task42');
     }
 
+    public function testGetTasks() {
+        task('t1');
+        task('t2');
+        $tasks = $this->loader->getTasks();
+        $this->assertEquals(2, count($tasks));
+    }
+
 }

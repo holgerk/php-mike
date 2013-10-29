@@ -55,6 +55,20 @@ class MainTest extends SimpleMock_TestCase {
         call_user_func($this->deps->runApplication);
     }
 
+    public function testWhenTaskFlagIsSetTaskAreShown() {
+        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')->strict()->complete()
+            ->expects('showTasks')
+            ->create()
+        );
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+            ->expects('argv')->returns(array('script.php', '-T'))
+            ->expects('workingDirectory')->returns($this->workingDirectory)
+            ->expects('quit')
+            ->create()
+        );
+        call_user_func($this->deps->runApplication);
+    }
+
     public function testTaskIsExecutedWithParams() {
         $result = null;
         task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });

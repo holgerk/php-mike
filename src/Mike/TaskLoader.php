@@ -29,6 +29,10 @@ class TaskLoader {
         return true;
     }
 
+    public function getTasks() {
+        return $this->tasks;
+    }
+
 
     // ==============================================================================
     // task file helper functions called via proxy functions defined in functions.php
@@ -43,7 +47,7 @@ class TaskLoader {
         $args = func_get_args();
         $name = array_shift($args);
         $function = array_pop($args);
-        if (!is_callable($function)) {
+        if ($function && !is_callable($function)) {
             $args[] = $function;
             $function = null;
         }
