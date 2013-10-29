@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "76fe896107440763206889506b21ae6e",
+    "hash": "b67e35c9b6e3ec1007bdba2409ee17c2",
     "packages": [
         {
             "name": "holgerk/jiggle",
@@ -38,16 +38,16 @@
     "packages-dev": [
         {
             "name": "holgerk/simple-mock",
-            "version": "v1.0.1",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/holgerk/php-simple-mock.git",
-                "reference": "4b71e88aed1b69293626863b82569a1038025011"
+                "reference": "da69d04641cf33715733a2c04833a24415969d2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/holgerk/php-simple-mock/zipball/4b71e88aed1b69293626863b82569a1038025011",
-                "reference": "4b71e88aed1b69293626863b82569a1038025011",
+                "url": "https://api.github.com/repos/holgerk/php-simple-mock/zipball/da69d04641cf33715733a2c04833a24415969d2f",
+                "reference": "da69d04641cf33715733a2c04833a24415969d2f",
                 "shasum": ""
             },
             "require": {
@@ -56,14 +56,14 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "SimpleMock_": "lib/"
+                    "SimpleMock_": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "time": "2013-10-24 16:46:30"
+            "time": "2013-10-29 17:52:58"
         }
     ],
     "aliases": [
