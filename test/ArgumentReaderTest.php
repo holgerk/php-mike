@@ -10,9 +10,8 @@ class ArgumentReaderTest extends SimpleMock_TestCase {
     }
 
     public function testReadArguments() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
-            ->expects('argv')
-            ->returns(array('script.php', 'test', 'filter=db', 'clean'))
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+            ->expects('argv')->returns(array('script.php', 'test', 'filter=db', 'clean'))
             ->create()
         );
         $this->assertEquals(

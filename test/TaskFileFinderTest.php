@@ -12,7 +12,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
     }
 
     public function testShouldFindTaskFileInWorkingDirectory() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
             ->expects('workingDirectory')
             ->returns($this->fixtureDir . '/dir1')
             ->create()
@@ -21,7 +21,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
     }
 
     public function testShouldFindTaskFileAboveWorkingDirectory() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
             ->expects('workingDirectory')
             ->returns($this->fixtureDir . '/dir1/dir2/dir3')
             ->create()
@@ -34,7 +34,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
      * @expectedExceptionMessage No Mikefile found!
      */
     public function testShouldNotFindTaskFile() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
             ->expects('workingDirectory')
             ->returns($this->fixtureDir)
             ->create()

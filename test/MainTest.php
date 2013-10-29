@@ -11,19 +11,17 @@ class MainTest extends SimpleMock_TestCase {
     }
 
     public function testWhenNoTaskFileIsFoundProcessIsTerminated() {
-        $this->deps->replace('taskFileFinder', $this->simpleMock('Mike\TaskFileFinder')
-            ->expects('find')
-                ->raises(new Mike\UsageError('No Mikefile found!'))
-            ->create()
+        $this->deps->replace('taskFileFinder',
+            $this->simpleMock('Mike\TaskFileFinder')->strict()->complete()
+                ->expects('find')->raises(new Mike\UsageError('No Mikefile found!'))
+                ->create()
         );
-        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')
-            ->expects('errorMessage')
-                ->with($this->stringContains('No Mikefile found!'))
+        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')->strict()->complete()
+            ->expects('errorMessage')->with($this->stringContains('No Mikefile found!'))
             ->create()
         );
         $this->deps->replace('process', $this->simpleMock('Mike\Process')
-            ->expects('argv')
-                ->returns(array('script.php'))
+            ->expects('argv')->returns(array('script.php'))
             ->expects('quit')
             ->create()
         );
@@ -31,16 +29,13 @@ class MainTest extends SimpleMock_TestCase {
     }
 
     public function testWhenNoTaskIsGivenErrorIsShown() {
-        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')
-            ->expects('errorMessage')
-                ->with($this->stringContains('No task given!'))
+        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')->strict()->complete()
+            ->expects('errorMessage')->with($this->stringContains('No task given!'))
             ->create()
         );
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
-            ->expects('argv')
-                ->returns(array('script.php'))
-            ->expects('workingDirectory')
-                ->returns($this->workingDirectory)
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+            ->expects('argv')->returns(array('script.php'))
+            ->expects('workingDirectory')->returns($this->workingDirectory)
             ->expects('quit')
             ->create()
         );
@@ -48,13 +43,12 @@ class MainTest extends SimpleMock_TestCase {
     }
 
     public function testWhenHelpFlagIsSetHelpIsShown() {
-        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')
+        $this->deps->replace('terminal', $this->simpleMock('Mike\Terminal')->strict()->complete()
             ->expects('helpMessage')
             ->create()
         );
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
-            ->expects('argv')
-                ->returns(array('script.php', '-h'))
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+            ->expects('argv')->returns(array('script.php', '-h'))
             ->expects('quit')
             ->create()
         );
@@ -92,11 +86,9 @@ class MainTest extends SimpleMock_TestCase {
             $workingDirectory = $options['workingDirectory'];
         }
 
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
-            ->expects('argv')
-                ->returns($shellArgs)
-            ->expects('workingDirectory')
-                ->returns($workingDirectory)
+        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+            ->expects('argv')->returns($shellArgs)
+            ->expects('workingDirectory')->returns($workingDirectory)
             ->create()
         );
     }

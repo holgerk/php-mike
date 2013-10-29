@@ -11,10 +11,8 @@ class InteractiveParamReaderTest extends SimpleMock_TestCase {
 
     public function testRead() {
         $this->deps->replace('process',
-            $this->simpleMock('Mike\Process')
-                ->expects('readline')
-                    ->with($this->stringContains('p2'))
-                    ->returns('42')
+            $this->simpleMock('Mike\Process')->strict()->complete()
+                ->expects('readline')->with($this->stringContains('p2'))->returns('42')
                 ->create()
         );
         $this->assertEquals(42, $this->deps->interactiveParamReader->read('p2'));
