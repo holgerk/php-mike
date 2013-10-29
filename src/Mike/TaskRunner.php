@@ -9,9 +9,15 @@ class TaskRunner {
         $this->interactiveParamReader = $interactiveParamReader;
         $this->throwUsageError = $throwUsageError;
         $this->taskStack = array();
+        $this->tasksThatWasRun = array();
     }
 
     public function run($taskName, $args = array()) {
+        $isDependencyFromOtherTask = (count($this->taskStack) > 0);
+        if ($isDependencyFromOtherTask && in_array($taskName, $this->tasksThatWasRun)) {
+            return;
+        }
+
         if (in_array($taskName, $this->taskStack)) {
             $chain = implode(' > ', $this->taskStack) . " > $taskName";
             call_user_func_array($this->throwUsageError, array("Circular dependencies: $chain!"));
@@ -25,6 +31,7 @@ class TaskRunner {
 
         $task->run($this->fetchTaskParams($task, $args));
         array_pop($this->taskStack);
+        $this->tasksThatWasRun[] = $taskName;
     }
 
     private function fetchTaskParams($task, $callArgs) {

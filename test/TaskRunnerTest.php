@@ -64,4 +64,24 @@ class TaskRunnerTest extends SimpleMock_TestCase {
         $this->deps->taskRunner->run('a');
     }
 
+    public function testThatDependenciesAreRunOnce() {
+        $runCount = 0;
+        task('build', function() use(&$runCount) { $runCount++; });
+        task('test', 'build');
+        $runner = $this->deps->taskRunner;
+        $runner->run('build');
+        $this->assertEquals(1, $runCount);
+        $runner->run('test');
+        $this->assertEquals(1, $runCount);
+    }
+
+    public function testThatDirectlyInvokedTasksCanRunMultipleTimes() {
+        $runCount = 0;
+        task('build', function() use(&$runCount) { $runCount++; });
+        $runner = $this->deps->taskRunner;
+        $runner->run('build');
+        $runner->run('build');
+        $this->assertEquals(2, $runCount);
+    }
+
 }
