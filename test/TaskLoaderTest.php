@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/util/BaseTestCase.php';
 
-class TaskLoaderTest extends SimpleMock_TestCase {
+class TaskLoaderTest extends BaseTestCase {
 
     public function setUp() {
         $container = new Mike\DependencyContainer;

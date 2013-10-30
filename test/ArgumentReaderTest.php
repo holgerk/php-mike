@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/util/BaseTestCase.php';
 
-class ArgumentReaderTest extends SimpleMock_TestCase {
+class ArgumentReaderTest extends BaseTestCase {
 
     public function setUp() {
         $container = new Mike\DependencyContainer;
@@ -10,7 +10,7 @@ class ArgumentReaderTest extends SimpleMock_TestCase {
     }
 
     public function testReadArguments() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+        $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('argv')->returns(array('script.php', 'test', 'filter=db', 'clean'))
             ->create()
         );

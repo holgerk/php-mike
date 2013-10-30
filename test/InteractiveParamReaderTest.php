@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/util/BaseTestCase.php';
 
-class InteractiveParamReaderTest extends SimpleMock_TestCase {
+class InteractiveParamReaderTest extends BaseTestCase {
 
     public function setUp() {
         $container = new Mike\DependencyContainer;
@@ -11,7 +11,7 @@ class InteractiveParamReaderTest extends SimpleMock_TestCase {
 
     public function testRead() {
         $this->deps->replace('process',
-            $this->simpleMock('Mike\Process')->strict()->complete()
+            $this->mock('Mike\Process')
                 ->expects('readline')->with($this->stringContains('p2'))->returns('42')
                 ->create()
         );

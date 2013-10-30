@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/util/BaseTestCase.php';
 
-class TaskRunnerTest extends SimpleMock_TestCase {
+class TaskRunnerTest extends BaseTestCase {
 
     public function setUp() {
         $container = new Mike\DependencyContainer;
@@ -43,7 +43,7 @@ class TaskRunnerTest extends SimpleMock_TestCase {
         $result = null;
         task('test', function($p1, $p2) use(&$result) { $result = $p1 + $p2; });
         $this->deps->replace('interactiveParamReader',
-            $this->simpleMock('Mike\InteractiveParamReader')->strict()->complete()
+            $this->mock('Mike\InteractiveParamReader')
                 ->expects('read')
                     ->with('p2')
                     ->returns('2')

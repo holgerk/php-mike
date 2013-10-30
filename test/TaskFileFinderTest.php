@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/util/BaseTestCase.php';
 
-class TaskFileFinderTest extends SimpleMock_TestCase {
+class TaskFileFinderTest extends BaseTestCase {
 
     public function setUp() {
         $container = new Mike\DependencyContainer;
@@ -12,7 +12,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
     }
 
     public function testShouldFindTaskFileInWorkingDirectory() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+        $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('workingDirectory')
             ->returns($this->fixtureDir . '/dir1')
             ->create()
@@ -21,7 +21,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
     }
 
     public function testShouldFindTaskFileAboveWorkingDirectory() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+        $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('workingDirectory')
             ->returns($this->fixtureDir . '/dir1/dir2/dir3')
             ->create()
@@ -34,7 +34,7 @@ class TaskFileFinderTest extends SimpleMock_TestCase {
      * @expectedExceptionMessage No Mikefile found!
      */
     public function testShouldNotFindTaskFile() {
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')->strict()->complete()
+        $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('workingDirectory')
             ->returns($this->fixtureDir)
             ->create()
