@@ -2,7 +2,7 @@
 
 namespace Mike;
 
-class Main {
+class Application {
 
     public function __construct(
             $taskFileFinder,

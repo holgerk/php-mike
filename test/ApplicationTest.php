@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/util/BaseTestCase.php';
 
-class MainTest extends BaseTestCase {
+class ApplicationTest extends BaseTestCase {
 
     public function setUp() {
         $container = new Mike\DependencyContainer;

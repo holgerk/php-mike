@@ -32,8 +32,8 @@ class DependencyContainer {
             return function() use($jiggle) {
                 try {
                     // catch usage errors during creation and run phase
-                    $main = $jiggle->create('Mike\Main');
-                    $main->run();
+                    $app = $jiggle->create('Mike\Application');
+                    $app->run();
                 } catch (UsageError $e) {
                     $jiggle->terminal->errorMessage($e->getMessage());
                     $jiggle->process->quit(1);
