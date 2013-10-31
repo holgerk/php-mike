@@ -24,8 +24,16 @@ class Terminal {
     public function showTasks() {
         $tasks = $this->taskLoader->getTasks();
         $output = '';
+
+        $maxTaskNameLength = array_reduce($tasks, function($max, $task) {
+            return max($max, strlen($task->getName()));
+        }, 0);
+
         foreach ($tasks as $task) {
-            $output .= sprintf("%s %s\n", $task->getName(), $task->getDescription());
+            $output .= sprintf(
+                "%-${maxTaskNameLength}s # %s\n",
+                $task->getName(),
+                $task->getDescription());
         }
         $this->process->output($output);
     }
