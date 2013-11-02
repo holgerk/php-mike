@@ -28,7 +28,13 @@ class Application {
             return;
         }
 
-        $taskFile = $this->taskFileFinder->find();
+        $taskFile = null;
+        if ($this->argumentReader->isFlagSet('file')) {
+            $taskFile = $this->argumentReader->getFlagArgument('file');
+        } else {
+            $taskFile = $this->taskFileFinder->find();
+        }
+
         $this->taskLoader->loadFile($taskFile);
 
         if ($this->argumentReader->isFlagSet('tasks')) {

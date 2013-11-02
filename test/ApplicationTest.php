@@ -85,6 +85,22 @@ class ApplicationTest extends BaseTestCase {
         $this->assertTrue($wasRun);
     }
 
+    public function testTaskFileCouldBeSetViaFileFlag() {
+        $this->deps->replace('process', $this->mock('Mike\Process')
+            ->expects('argv')->returns(array('script.php', '-f', 'OtherMikefile', 'noop'))
+            ->create()
+        );
+        $this->deps->replace('taskLoader', $this->mock('Mike\TaskLoader')
+            ->expects('loadFile')->with('OtherMikefile')
+            ->create()
+        );
+        $this->deps->replace('taskRunner', $this->mock('Mike\TaskRunner')
+            ->expects('run')->with('noop')
+            ->create()
+        );
+        call_user_func($this->deps->runApplication);
+    }
+
 
     // ================
     // helper functions

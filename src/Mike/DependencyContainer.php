@@ -23,6 +23,11 @@ class DependencyContainer {
             'description' => 'Display tasks with description',
             'argument'    => null,
         ),
+        'file' => array(
+            'short'       => 'f',
+            'description' => 'Load the specified task file',
+            'argument'    => 'file',
+        ),
     );
 
     public function __construct() {

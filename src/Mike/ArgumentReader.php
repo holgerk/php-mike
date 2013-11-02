@@ -12,6 +12,7 @@ class ArgumentReader {
 
         $this->taskArgs = array();
         $this->flags = array();
+        $this->flagArguments = array();
 
         $this->parseArgv();
     }
@@ -34,11 +35,23 @@ class ArgumentReader {
         return false;
     }
 
+    public function getFlagArgument($flagName) {
+        return $this->flagArguments[$flagName];
+    }
+
     private function parseArgv() {
+        $flagWithArgument = null;
         foreach ($this->argv as $arg) {
-            if (strlen($arg) && $arg[0] == '-') {
+            if ($flagWithArgument) {
+                // flag argument
+                $this->flagArguments[$flagWithArgument] = $arg;
+                $flagWithArgument = null;
+            } else if (strlen($arg) && $arg[0] == '-') {
                 // flag
-                $this->registerFlag($arg);
+                $flagName = $this->registerFlag($arg);
+                $flagWithArgument = !is_null($this->commandLineFlags[$flagName]['argument'])
+                    ? $flagName
+                    : null;
             } else if (strpos($arg, '=') !== false) {
                 // param
                 list($name, $value) = explode('=', $arg, 2);
@@ -71,6 +84,7 @@ class ArgumentReader {
             call_user_func($this->throwUsageError, "Invalid option: $flag!");
         }
         $this->flags[$flagName] = true;
+        return $flagName;
     }
 
 }
