@@ -48,7 +48,7 @@ class DependencyContainer {
         $jiggle->taskFileFinder         = $jiggle->createFactory('Mike\TaskFileFinder');
         $jiggle->taskLoader             = $jiggle->createFactory('Mike\TaskLoader');
         $jiggle->taskRunner             = $jiggle->createFactory('Mike\TaskRunner');
-        $jiggle->terminal               = $jiggle->createFactory('Mike\Terminal');
+        $jiggle->terminal               = $jiggle->createFactory('Mike\Output');
         $jiggle->process                = $jiggle->createFactory('Mike\Process');
         $jiggle->interactiveParamReader = $jiggle->createFactory('Mike\InteractiveParamReader');
         $jiggle->argumentReader         = $jiggle->createFactory('Mike\ArgumentReader');

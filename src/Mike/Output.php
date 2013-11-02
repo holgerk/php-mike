@@ -2,7 +2,7 @@
 
 namespace Mike;
 
-class Terminal {
+class Output {
 
     public function __construct($process, $taskLoader) {
         $this->process = $process;
