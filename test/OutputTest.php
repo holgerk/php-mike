@@ -45,7 +45,7 @@ class OutputTest extends BaseTestCase {
             ->create()
         );
 
-        $this->deps->terminal->showTasks();
+        $this->deps->output->showTasks();
         return $result;
     }
 

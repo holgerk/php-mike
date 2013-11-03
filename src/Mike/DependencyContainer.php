@@ -40,7 +40,7 @@ class DependencyContainer {
                     $app = $jiggle->create('Mike\Application');
                     $app->run();
                 } catch (UsageError $e) {
-                    $jiggle->terminal->errorMessage($e->getMessage());
+                    $jiggle->output->errorMessage($e->getMessage());
                     $jiggle->process->quit(1);
                 }
             };
@@ -48,7 +48,7 @@ class DependencyContainer {
         $jiggle->taskFileFinder         = $jiggle->createFactory('Mike\TaskFileFinder');
         $jiggle->taskLoader             = $jiggle->createFactory('Mike\TaskLoader');
         $jiggle->taskRunner             = $jiggle->createFactory('Mike\TaskRunner');
-        $jiggle->terminal               = $jiggle->createFactory('Mike\Output');
+        $jiggle->output                 = $jiggle->createFactory('Mike\Output');
         $jiggle->process                = $jiggle->createFactory('Mike\Process');
         $jiggle->interactiveParamReader = $jiggle->createFactory('Mike\InteractiveParamReader');
         $jiggle->argumentReader         = $jiggle->createFactory('Mike\ArgumentReader');

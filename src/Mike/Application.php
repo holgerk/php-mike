@@ -10,20 +10,20 @@ class Application {
             $process,
             $argumentReader,
             $taskRunner,
-            $terminal,
+            $output,
             $throwUsageError) {
         $this->taskFileFinder  = $taskFileFinder;
         $this->taskLoader      = $taskLoader;
         $this->process         = $process;
         $this->argumentReader  = $argumentReader;
         $this->taskRunner      = $taskRunner;
-        $this->terminal        = $terminal;
+        $this->output        = $output;
         $this->throwUsageError = $throwUsageError;
     }
 
     public function run() {
         if ($this->argumentReader->isFlagSet('help')) {
-            $this->terminal->helpMessage();
+            $this->output->helpMessage();
             $this->process->quit(0);
             return;
         }
@@ -38,7 +38,7 @@ class Application {
         $this->taskLoader->loadFile($taskFile);
 
         if ($this->argumentReader->isFlagSet('tasks')) {
-            $this->terminal->showTasks();
+            $this->output->showTasks();
             $this->process->quit(0);
             return;
         }

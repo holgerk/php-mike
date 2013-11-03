@@ -16,7 +16,7 @@ class ApplicationTest extends BaseTestCase {
                 ->expects('find')->raises(new Mike\UsageError('No Mikefile found!'))
                 ->create()
         );
-        $this->deps->replace('terminal', $this->mock('Mike\Output')
+        $this->deps->replace('output', $this->mock('Mike\Output')
             ->expects('errorMessage')->with($this->stringContains('No Mikefile found!'))
             ->create()
         );
@@ -29,7 +29,7 @@ class ApplicationTest extends BaseTestCase {
     }
 
     public function testWhenNoTaskIsGivenErrorIsShown() {
-        $this->deps->replace('terminal', $this->mock('Mike\Output')
+        $this->deps->replace('output', $this->mock('Mike\Output')
             ->expects('errorMessage')->with($this->stringContains('No task given!'))
             ->create()
         );
@@ -43,7 +43,7 @@ class ApplicationTest extends BaseTestCase {
     }
 
     public function testWhenHelpFlagIsSetHelpIsShown() {
-        $this->deps->replace('terminal', $this->mock('Mike\Output')
+        $this->deps->replace('output', $this->mock('Mike\Output')
             ->expects('helpMessage')
             ->create()
         );
@@ -56,7 +56,7 @@ class ApplicationTest extends BaseTestCase {
     }
 
     public function testWhenTaskFlagIsSetTaskAreShown() {
-        $this->deps->replace('terminal', $this->mock('Mike\Output')
+        $this->deps->replace('output', $this->mock('Mike\Output')
             ->expects('showTasks')
             ->create()
         );
