@@ -1,12 +1,14 @@
 <?php
 
 require_once __DIR__ . '/util/BaseTestCase.php';
+require_once __DIR__ . '/util/NullColorizer.php';
 
 class OutputTest extends BaseTestCase {
 
     public function setUp() {
         $container = new Mike\DependencyContainer;
         $this->deps = $container->getDependencies();
+        $this->deps->replace('colorizer', new NullColorizer());
     }
 
     public function testListining1() {

@@ -4,9 +4,10 @@ namespace Mike;
 
 class Output {
 
-    public function __construct($process, $taskLoader) {
+    public function __construct($process, $taskLoader, $colorizer) {
         $this->process = $process;
         $this->taskLoader = $taskLoader;
+        $this->colorizer = $colorizer;
     }
 
     public function errorMessage($message) {
@@ -32,7 +33,7 @@ class Output {
         foreach ($tasks as $task) {
             $output .= sprintf(
                 "%-${maxTaskNameLength}s # %s\n",
-                $task->getName(),
+                $this->colorizer->bold($task->getName()),
                 $task->getDescription());
         }
         $this->process->output($output);
