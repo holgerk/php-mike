@@ -11,6 +11,13 @@ class Task {
         $this->function     = $args['function'];
     }
 
+    public function run($params) {
+        if (!$this->function) {
+            return null;
+        }
+        return call_user_func_array($this->function, $params);
+    }
+
     public function getName() {
         return $this->name;
     }
@@ -22,23 +29,22 @@ class Task {
         return $this->description;
     }
 
-    public function getDependencies() {
-        return $this->dependencies;
-    }
-
-    public function run($params) {
-        if (!$this->function) {
-            return null;
-        }
-        return call_user_func_array($this->function, $params);
-    }
-
     public function getParams() {
         if (!$this->function) {
             return array();
         }
         $reflection = new \ReflectionFunction($this->function);
         return $reflection->getParameters();
+    }
+
+    public function getRequiredParams() {
+        return array_filter($this->getParams(), function($param) {
+            return !$param->isOptional();
+        });
+    }
+
+    public function getDependencies() {
+        return $this->dependencies;
     }
 
     private function fetchDescriptionFromDocComment() {

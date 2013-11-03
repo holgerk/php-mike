@@ -26,17 +26,36 @@ class Output {
         $tasks = $this->taskLoader->getTasks();
         $output = '';
 
-        $maxTaskNameLength = array_reduce($tasks, function($max, $task) {
-            return max($max, strlen($task->getName()));
+        $paramStrings = array();
+        foreach ($tasks as $task) {
+            $paramStrings[$task->getName()] = $this->getParamString($task->getRequiredParams());
+        }
+
+        $maxTaskSignatureLength = array_reduce($tasks, function($max, $task) use($paramStrings) {
+            $taskName = $task->getName();
+            $taskParamString = $paramStrings[$taskName];
+            $taskSignature = trim(sprintf('%s %s', $taskName, $taskParamString));
+            return max($max, strlen($taskSignature));
         }, 0);
 
         foreach ($tasks as $task) {
+            $taskName = $task->getName();
+            $taskParamString = $paramStrings[$taskName];
+            $taskSignature = trim(sprintf('%s %s', $taskName, $taskParamString));
+            $padding = max(0, $maxTaskSignatureLength - strlen($taskSignature));
             $output .= sprintf(
-                "%-${maxTaskNameLength}s # %s\n",
-                $this->colorizer->bold($task->getName()),
+                "%s%s # %s\n",
+                $this->colorizer->bold($taskSignature),
+                str_repeat(' ', $padding),
                 $task->getDescription());
         }
         $this->process->output($output);
+    }
+
+    private function getParamString($params) {
+        return trim(array_reduce($params, function($result, $param) {
+            return $result .= sprintf("%s=? ", $param->getName());
+        }, ''));
     }
 
 }

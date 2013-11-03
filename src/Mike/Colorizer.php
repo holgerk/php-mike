@@ -29,6 +29,7 @@ class Colorizer {
     const Underline = 4;
 
     public function __call($method, $args) {
+        $text = $args[0];
         $result = "\033[0";
         $prefix = '';
         foreach ($this->splitCamelCase($method) as $word) {
@@ -46,7 +47,7 @@ class Colorizer {
             $prefix = '';
         }
         $result .= 'm';
-        $result .= $args[0];
+        $result .= $text;
         $result .= self::Reset;
         return $result;
     }

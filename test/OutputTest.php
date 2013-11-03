@@ -11,7 +11,7 @@ class OutputTest extends BaseTestCase {
         $this->deps->replace('colorizer', new NullColorizer());
     }
 
-    public function testListining1() {
+    public function testListining() {
         desc('desc1');
         task('task1');
         desc('desc2');
@@ -23,7 +23,7 @@ class OutputTest extends BaseTestCase {
         );
     }
 
-    public function testListining2() {
+    public function testListiningWithLongTaskName() {
         desc('desc1');
         task('longtask1');
         desc('desc2');
@@ -31,6 +31,18 @@ class OutputTest extends BaseTestCase {
         $this->assertEquals(''
             . "longtask1 # desc1\n"
             . "task2     # desc2\n"
+            , $this->getTaskListing()
+        );
+    }
+
+    public function testListiningWithTaskParams() {
+        desc('desc1');
+        task('task1');
+        desc('desc2');
+        task('task2', function($param1) {});
+        $this->assertEquals(''
+            . "task1          # desc1\n"
+            . "task2 param1=? # desc2\n"
             , $this->getTaskListing()
         );
     }
