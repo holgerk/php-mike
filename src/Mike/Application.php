@@ -35,6 +35,8 @@ class Application {
             $taskFile = $this->taskFileFinder->find();
         }
 
+        $taskFile = $this->process->realpath($taskFile);
+        $this->process->chdir(dirname($taskFile));
         $this->taskLoader->loadFile($taskFile);
 
         if ($this->argumentReader->isFlagSet('tasks')) {

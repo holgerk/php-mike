@@ -20,9 +20,20 @@ class ApplicationTest extends BaseTestCase {
             ->expects('errorMessage')->with($this->stringContains('No Mikefile found!'))
             ->create()
         );
-        $this->deps->replace('process', $this->simpleMock('Mike\Process')
+        $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('argv')->returns(array('script.php'))
             ->expects('quit')
+            ->create()
+        );
+        call_user_func($this->deps->runApplication);
+    }
+
+    public function testChdirToMikefileDirectory() {
+        $this->deps->replace('process', $this->mock('Mike\Process')
+            ->expects('argv')->returns(array('script.php', 'task1'))
+            ->expects('workingDirectory')->returns($this->workingDirectory . '/dir2')
+            ->expects('realpath')->returns($this->workingDirectory . '/Mikefile')
+            ->expects('chdir')->with($this->workingDirectory)
             ->create()
         );
         call_user_func($this->deps->runApplication);
@@ -36,6 +47,8 @@ class ApplicationTest extends BaseTestCase {
         $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('argv')->returns(array('script.php'))
             ->expects('workingDirectory')->returns($this->workingDirectory)
+            ->expects('realpath')->returns($this->workingDirectory . '/Mikefile')
+            ->expects('chdir')
             ->expects('quit')
             ->create()
         );
@@ -63,6 +76,8 @@ class ApplicationTest extends BaseTestCase {
         $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('argv')->returns(array('script.php', '-T'))
             ->expects('workingDirectory')->returns($this->workingDirectory)
+            ->expects('realpath')->returns($this->workingDirectory . '/Mikefile')
+            ->expects('chdir')
             ->expects('quit')
             ->create()
         );
@@ -88,6 +103,8 @@ class ApplicationTest extends BaseTestCase {
     public function testTaskFileCouldBeSetViaFileFlag() {
         $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('argv')->returns(array('script.php', '-f', 'OtherMikefile', 'noop'))
+            ->expects('realpath')->returns('OtherMikefile')
+            ->expects('chdir')
             ->create()
         );
         $this->deps->replace('taskLoader', $this->mock('Mike\TaskLoader')
@@ -119,6 +136,8 @@ class ApplicationTest extends BaseTestCase {
         $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('argv')->returns($shellArgs)
             ->expects('workingDirectory')->returns($workingDirectory)
+            ->expects('realpath')->returns($this->workingDirectory . '/Mikefile')
+            ->expects('chdir')
             ->create()
         );
     }

@@ -15,6 +15,14 @@ class Process {
         return getcwd();
     }
 
+    public function chdir($directory) {
+        chdir($directory);
+    }
+
+    public function realpath($path) {
+        return realpath($path);
+    }
+
     public function argv() {
         global $argv;
         return $argv;
