@@ -5,7 +5,7 @@ namespace Mike;
 class Colorizer {
 
     // http://en.wikipedia.org/wiki/ANSI_escape_code
-    const Reset  = '\033[0m';
+    const Reset  = "\033[0m";
 
     const Black  = 30;
     const Red    = 31;
@@ -29,7 +29,7 @@ class Colorizer {
     const Underline = 4;
 
     public function __call($method, $args) {
-        $result = '\033[0';
+        $result = "\033[0";
         $prefix = '';
         foreach ($this->splitCamelCase($method) as $word) {
             $word = ucfirst($word);

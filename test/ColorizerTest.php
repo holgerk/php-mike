@@ -11,9 +11,9 @@ class ColorizerTest extends BaseTestCase {
 
     public static function testColorizerDataProvider() {
         return array(
-            array('\033[0;31mTEXT\033[0m', 'red', 'TEXT'),
-            array('\033[0;31;1mTEXT\033[0m', 'redBold', 'TEXT'),
-            array('\033[0;31;1;40mTEXT\033[0m', 'redBoldOnBlack', 'TEXT'),
+            array("\033[0;31mTEXT\033[0m", 'red', 'TEXT'),
+            array("\033[0;31;1mTEXT\033[0m", 'redBold', 'TEXT'),
+            array("\033[0;31;1;40mTEXT\033[0m", 'redBoldOnBlack', 'TEXT'),
         );
     }
 
