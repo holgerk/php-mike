@@ -3,7 +3,8 @@
 Todos
 =====
 
-* format task list nicely
-* Support dependencies
-* zsh autocomplete
-* bash autocomplete
+[x] format task list nicely
+[ ] generate and format help
+[ ] Support dependencies
+[ ] zsh autocomplete
+[ ] bash autocomplete
