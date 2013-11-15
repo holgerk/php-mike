@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b67e35c9b6e3ec1007bdba2409ee17c2",
+    "hash": "8b668b67709c4f31b3c986b924fb758e",
     "packages": [
         {
             "name": "holgerk/jiggle",
-            "version": "v1.0.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/holgerk/php-jiggle.git",
-                "reference": "54dacf1e7250d9e50091bb792457e234554df3f6"
+                "reference": "8b4f31f2876ddd28596f014c53981a87536cfff9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/holgerk/php-jiggle/zipball/54dacf1e7250d9e50091bb792457e234554df3f6",
-                "reference": "54dacf1e7250d9e50091bb792457e234554df3f6",
+                "url": "https://api.github.com/repos/holgerk/php-jiggle/zipball/8b4f31f2876ddd28596f014c53981a87536cfff9",
+                "reference": "8b4f31f2876ddd28596f014c53981a87536cfff9",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2013-10-24 19:32:59"
+            "time": "2013-11-15 20:00:56"
         }
     ],
     "packages-dev": [
@@ -70,9 +70,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "holgerk/jiggle": 20
+    },
     "platform": {
         "php": ">=5.3.0"
     },

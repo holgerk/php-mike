@@ -45,14 +45,14 @@ class DependencyContainer {
                 }
             };
         };
-        $jiggle->taskFileFinder         = $jiggle->createFactory('Mike\TaskFileFinder');
-        $jiggle->taskLoader             = $jiggle->createFactory('Mike\TaskLoader');
-        $jiggle->taskRunner             = $jiggle->createFactory('Mike\TaskRunner');
-        $jiggle->output                 = $jiggle->createFactory('Mike\Output');
-        $jiggle->colorizer              = $jiggle->createFactory('Mike\Colorizer');
-        $jiggle->process                = $jiggle->createFactory('Mike\Process');
-        $jiggle->interactiveParamReader = $jiggle->createFactory('Mike\InteractiveParamReader');
-        $jiggle->argumentReader         = $jiggle->createFactory('Mike\ArgumentReader');
+        $jiggle->taskFileFinder         = $jiggle->singleton('Mike\TaskFileFinder');
+        $jiggle->taskLoader             = $jiggle->singleton('Mike\TaskLoader');
+        $jiggle->taskRunner             = $jiggle->singleton('Mike\TaskRunner');
+        $jiggle->output                 = $jiggle->singleton('Mike\Output');
+        $jiggle->colorizer              = $jiggle->singleton('Mike\Colorizer');
+        $jiggle->process                = $jiggle->singleton('Mike\Process');
+        $jiggle->interactiveParamReader = $jiggle->singleton('Mike\InteractiveParamReader');
+        $jiggle->argumentReader         = $jiggle->singleton('Mike\ArgumentReader');
         $jiggle->commandLineFlags       = $this->commandLineFlags;
         $jiggle->throwUsageError        = function() {
             return function($message) {
