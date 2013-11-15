@@ -4,10 +4,11 @@ namespace Mike;
 
 class Output {
 
-    public function __construct($process, $taskLoader, $colorizer) {
+    public function __construct($process, $taskLoader, $colorizer, $commandLineFlags) {
         $this->process = $process;
         $this->taskLoader = $taskLoader;
         $this->colorizer = $colorizer;
+        $this->commandLineFlags = $commandLineFlags;
     }
 
     public function errorMessage($message) {
@@ -19,7 +20,27 @@ class Output {
     }
 
     public function helpMessage() {
-        echo "mike [flags] [tasks]\n";
+        $message = ''
+            . "Usage: mike [OPTION]... TASK...\n"
+            . "   or: mike [OPTION]... -f MIKEFILE TASK...\n"
+            . "\n"
+            . "Options:\n"
+            ;
+        $signatures = array();
+        $descriptions = array();
+        foreach ($this->commandLineFlags as $longName => $flagDef) {
+            $signature = "-$flagDef[short], --$longName";
+            if ($flagDef['argument']) {
+                $signature .= ' ' . strtoupper($flagDef['argument']);
+            }
+            $signatures[] = $signature;
+            $descriptions[] = $flagDef['description'];
+        }
+        $signaturePadding = call_user_func_array('max', array_map('strlen', $signatures));
+        for ($i = 0; $i < count($signatures); $i++) {
+            $message .= sprintf("%-{$signaturePadding}s %s\n", $signatures[$i], $descriptions[$i]);
+        }
+        $this->process->output($message);
     }
 
     public function showTasks() {
