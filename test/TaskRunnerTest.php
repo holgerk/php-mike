@@ -7,6 +7,10 @@ class TaskRunnerTest extends BaseTestCase {
     public function setUp() {
         $container = new Mike\DependencyContainer;
         $this->deps = $container->getDependencies();
+        $this->deps->replace('process', $this->mock('Mike\Process')
+            ->expects('argv')->returns(array('script.php'))
+            ->create()
+        );
     }
 
     public function testThatTaskIsRun() {
@@ -82,6 +86,87 @@ class TaskRunnerTest extends BaseTestCase {
         $runner->run('build');
         $runner->run('build');
         $this->assertEquals(2, $runCount);
+    }
+
+    public function testThatTaskCanRunOtherTaskAndFetchReturnValue() {
+        $result = 0;
+        task('build', function()  { return 42; });
+        task('test', function() use(&$result) {
+            $result = run('build');
+        });
+        $this->deps->taskRunner->run('test');
+        $this->assertEquals(42, $result);
+    }
+
+    public function testThatTaskCanRunOtherTaskWithParams() {
+        $result = 0;
+        task('build', function($p1)  { return 40 + $p1; });
+        task('test', function() use(&$result) {
+            $result = run('build', array('p1' => 2));
+        });
+        $this->deps->taskRunner->run('test');
+        $this->assertEquals(42, $result);
+    }
+
+    public function testThatTaskParamsCouldBeProvidedByParamDeclaration() {
+        $this->deps->replace('interactiveParamReader', $this->mock('Mike\InterActiveParamReader')
+            ->create()
+        );
+
+        param('p1', 2);
+
+        $result = 0;
+        task('build', function($p1)  { return 40 + $p1; });
+        task('test', function() use(&$result) {
+            $result = run('build');
+        });
+        $this->deps->taskRunner->run('test');
+        $this->assertEquals(42, $result);
+    }
+
+    public function testThatParamDeclarationCouldBeLazyEvaluatedWithClosures() {
+        $this->deps->replace('interactiveParamReader', $this->mock('Mike\InterActiveParamReader')
+            ->create()
+        );
+
+        $evaluated = false;
+        param('p1', function() use(&$evaluated) {
+            $evaluated = true;
+            return 2;
+        });
+
+        $this->assertFalse($evaluated);
+
+        task('test', function($p1)  { return 40 + $p1; });
+        $result = $this->deps->taskRunner->run('test');
+        $this->assertEquals(42, $result);
+        $this->assertTrue($evaluated);
+    }
+
+    public function testThatParamClosuresCanDependOnEachOther() {
+        $this->deps->replace('interactiveParamReader', $this->mock('Mike\InterActiveParamReader')
+            ->create()
+        );
+
+        param('p1', function($p2) { return $p2 + 2; });
+        param('p2', 40);
+
+        task('test', function($p1)  { return $p1; });
+        $result = $this->deps->taskRunner->run('test');
+        $this->assertEquals(42, $result);
+    }
+
+    public function testThatUnresolvableParamDepenciesAreResolvedViaInteractiveParamReader() {
+        $this->deps->replace('interactiveParamReader', $this->mock('Mike\InterActiveParamReader')
+            ->expects('read')->with('p2')->returns(40)
+            ->create()
+        );
+
+        param('p1', function($p2) { return $p2 + 2; });
+
+        task('test', function($p1)  { return $p1; });
+        $result = $this->deps->taskRunner->run('test');
+        $this->assertEquals(42, $result);
     }
 
 }

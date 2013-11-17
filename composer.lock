@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/holgerk/php-jiggle.git",
-                "reference": "8b4f31f2876ddd28596f014c53981a87536cfff9"
+                "reference": "2959db80baefcf53e31504d238a3993d07a8fb1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/holgerk/php-jiggle/zipball/8b4f31f2876ddd28596f014c53981a87536cfff9",
-                "reference": "8b4f31f2876ddd28596f014c53981a87536cfff9",
+                "url": "https://api.github.com/repos/holgerk/php-jiggle/zipball/2959db80baefcf53e31504d238a3993d07a8fb1a",
+                "reference": "2959db80baefcf53e31504d238a3993d07a8fb1a",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2013-11-15 20:00:56"
+            "time": "2013-11-16 20:20:50"
         }
     ],
     "packages-dev": [

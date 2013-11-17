@@ -100,6 +100,17 @@ class ApplicationTest extends BaseTestCase {
         $this->assertTrue($wasRun);
     }
 
+    public function testParamsResolvedFromShellArgs() {
+        $this->setEnv(array('shellArgs' => array('test', 'p2=42')));
+        $result = null;
+        param('p1', function($p2) {
+            return $p2;
+        });
+        task('test', function($p1) use(&$result) { $result = $p1; });
+        call_user_func($this->deps->runApplication);
+        $this->assertEquals(42, $result);
+    }
+
     public function testTaskFileCouldBeSetViaFileFlag() {
         $this->deps->replace('process', $this->mock('Mike\Process')
             ->expects('argv')->returns(array('script.php', '-f', 'OtherMikefile', 'noop'))

@@ -5,6 +5,6 @@ Todos
 
  - [x] format task list nicely
  - [x] generate and format help
- - [ ] Support dependencies
+ - [x] Support dependencies
  - [ ] zsh autocomplete
  - [ ] bash autocomplete

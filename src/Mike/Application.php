@@ -17,7 +17,7 @@ class Application {
         $this->process         = $process;
         $this->argumentReader  = $argumentReader;
         $this->taskRunner      = $taskRunner;
-        $this->output        = $output;
+        $this->output          = $output;
         $this->throwUsageError = $throwUsageError;
     }
 

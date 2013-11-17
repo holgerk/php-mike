@@ -10,6 +10,10 @@ class DependencyContainer {
         return self::$instance->jiggle->taskLoader;
     }
 
+    static public function getTaskRunner() {
+        return self::$instance->jiggle->taskRunner;
+    }
+
     private $jiggle;
 
     private $commandLineFlags = array(
