@@ -7,9 +7,13 @@ class ColorizerTest extends BaseTestCase {
     public function setUp() {
         $container = new Mike\DependencyContainer;
         $this->deps = $container->getDependencies();
+        $this->deps->replace('process', $this->mock('Mike\Process')
+            ->expects('argv')->returns(array('script.php'))
+            ->create()
+        );
     }
 
-    public static function testColorizerDataProvider() {
+    public static function colorizerDataProvider() {
         return array(
             array("\033[0;31mTEXT\033[0m", 'red', 'TEXT'),
             array("\033[0;31;1mTEXT\033[0m", 'redBold', 'TEXT'),
@@ -18,7 +22,7 @@ class ColorizerTest extends BaseTestCase {
     }
 
     /**
-     * @dataProvider testColorizerDataProvider
+     * @dataProvider colorizerDataProvider
      */
     public function testColorizer($expectedOutput, $method, $input) {
         $this->assertEquals($expectedOutput, $this->deps->colorizer->$method($input));

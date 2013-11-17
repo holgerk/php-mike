@@ -32,6 +32,11 @@ class DependencyContainer {
             'description' => 'Load the specified task file',
             'argument'    => 'file',
         ),
+        'no-color' => array(
+            'short'       => 'n',
+            'description' => 'Do not colorize output messages',
+            'argument'    => null,
+        ),
     );
 
     public function __construct() {
@@ -53,7 +58,9 @@ class DependencyContainer {
         $jiggle->taskLoader             = $jiggle->singleton('Mike\TaskLoader');
         $jiggle->taskRunner             = $jiggle->singleton('Mike\TaskRunner');
         $jiggle->output                 = $jiggle->singleton('Mike\Output');
-        $jiggle->colorizer              = $jiggle->singleton('Mike\Colorizer');
+        $jiggle->colorizer              = function($argumentReader) {
+            return new Colorizer($argumentReader->isFlagSet('no-color'));
+        };
         $jiggle->process                = $jiggle->singleton('Mike\Process');
         $jiggle->interactiveParamReader = $jiggle->singleton('Mike\InteractiveParamReader');
         $jiggle->argumentReader         = $jiggle->singleton('Mike\ArgumentReader');

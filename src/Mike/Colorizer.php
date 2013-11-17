@@ -28,6 +28,10 @@ class Colorizer {
     const Bold = 1;
     const Underline = 4;
 
+    public function __construct($noColoring = false) {
+        $this->noColoring = $noColoring;
+    }
+
     public function __call($method, $args) {
         $text = $args[0];
         $result = "\033[0";
@@ -49,6 +53,10 @@ class Colorizer {
         $result .= 'm';
         $result .= $text;
         $result .= self::Reset;
+
+        if ($this->noColoring) {
+            return $text;
+        }
         return $result;
     }
 
