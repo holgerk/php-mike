@@ -13,15 +13,16 @@ class ArgumentReader {
         $this->taskArgs = array();
         $this->flags = array();
         $this->flagArguments = array();
-
-        $this->parseArgv();
+        $this->argsParsed = false;
     }
 
     public function getTasks() {
+        $this->parseArgv();
         return array_keys($this->taskArgs);
     }
 
     public function getTaskArgs($taskName) {
+        $this->parseArgv();
         if (!isset($this->taskArgs[$taskName])) {
             return array();
         }
@@ -29,6 +30,7 @@ class ArgumentReader {
     }
 
     public function isFlagSet($flagName) {
+        $this->parseArgv();
         if (isset($this->flags[$flagName])) {
             return true;
         }
@@ -36,10 +38,15 @@ class ArgumentReader {
     }
 
     public function getFlagArgument($flagName) {
+        $this->parseArgv();
         return $this->flagArguments[$flagName];
     }
 
     private function parseArgv() {
+        if ($this->argsParsed) {
+            return;
+        }
+
         $flagWithArgument = null;
         foreach ($this->argv as $arg) {
             if ($flagWithArgument) {
@@ -62,6 +69,8 @@ class ArgumentReader {
                 $args = &$this->taskArgs[$arg];
             }
         }
+
+        $this->argsParsed = true;
     }
 
     private function registerFlag($flag) {

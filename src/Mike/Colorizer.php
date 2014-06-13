@@ -28,8 +28,8 @@ class Colorizer {
     const Bold = 1;
     const Underline = 4;
 
-    public function __construct($noColoring = false) {
-        $this->noColoring = $noColoring;
+    public function __construct($disableColors) {
+        $this->disableColors = $disableColors;
     }
 
     public function __call($method, $args) {
@@ -54,7 +54,7 @@ class Colorizer {
         $result .= $text;
         $result .= self::Reset;
 
-        if ($this->noColoring) {
+        if ($this->disableColors) {
             return $text;
         }
         return $result;

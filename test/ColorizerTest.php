@@ -7,10 +7,6 @@ class ColorizerTest extends BaseTestCase {
     public function setUp() {
         $container = new Mike\DependencyContainer;
         $this->deps = $container->getDependencies();
-        $this->deps->replace('process', $this->mock('Mike\Process')
-            ->expects('argv')->returns(array('script.php'))
-            ->create()
-        );
     }
 
     public static function colorizerDataProvider() {

@@ -42,10 +42,13 @@ class DependencyContainer {
     public function __construct() {
         $jiggle = new \Jiggle;
 
-        $jiggle->runApplication = function() use($jiggle) {
-            return function() use($jiggle) {
+        $jiggle->disableColors = false;
+
+        $jiggle->runApplication = function($argumentReader) use($jiggle) {
+            return function() use($argumentReader, $jiggle) {
                 try {
                     // catch usage errors during creation and run phase
+                    $jiggle->replace('disableColors', $argumentReader->isFlagSet('no-color'));
                     $app = $jiggle->create('Mike\Application');
                     $app->run();
                 } catch (UsageError $e) {
@@ -58,9 +61,7 @@ class DependencyContainer {
         $jiggle->taskLoader             = $jiggle->singleton('Mike\TaskLoader');
         $jiggle->taskRunner             = $jiggle->singleton('Mike\TaskRunner');
         $jiggle->output                 = $jiggle->singleton('Mike\Output');
-        $jiggle->colorizer              = function($argumentReader) {
-            return new Colorizer($argumentReader->isFlagSet('no-color'));
-        };
+        $jiggle->colorizer              = $jiggle->singleton('Mike\Colorizer');
         $jiggle->process                = $jiggle->singleton('Mike\Process');
         $jiggle->interactiveParamReader = $jiggle->singleton('Mike\InteractiveParamReader');
         $jiggle->argumentReader         = $jiggle->singleton('Mike\ArgumentReader');
