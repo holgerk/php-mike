@@ -44,4 +44,25 @@ class TaskLoaderTest extends BaseTestCase {
         $this->assertEquals(2, count($tasks));
     }
 
+    public function testGrouping() {
+        group('db', function() {
+            task('dump');
+        });
+        $tasks = $this->loader->getTasks();
+        $this->assertEquals(1, count($tasks));
+        $this->assertEquals('db:dump', $tasks['db:dump']->getName());
+    }
+
+    public function testNestedGroups() {
+        group('g1', function() {
+            group('g2', function() {
+                task('t');
+            });
+        });
+        $tasks = $this->loader->getTasks();
+        $this->assertEquals(1, count($tasks));
+        $this->assertEquals('g1:g2:t', $tasks['g1:g2:t']->getName());
+    }
+
+
 }

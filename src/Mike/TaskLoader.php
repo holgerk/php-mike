@@ -9,6 +9,8 @@ class TaskLoader {
 
     public function __construct($throwUsageError) {
         $this->throwUsageError = $throwUsageError;
+
+        $this->openGroups = array();
     }
 
     public function loadFile($taskFile) {
@@ -46,6 +48,9 @@ class TaskLoader {
     public function task() {
         $args = func_get_args();
         $name = array_shift($args);
+        if (!empty($this->openGroups)) {
+            $name = implode(':', $this->openGroups) . ":$name";
+        }
         $function = array_pop($args);
         if ($function && !is_callable($function)) {
             $args[] = $function;
@@ -58,6 +63,12 @@ class TaskLoader {
             'function'     => $function
         ));
         return $this->tasks[$name];
+    }
+
+    public function group($groupName, $function) {
+        $this->openGroups []= $groupName;
+        call_user_func($function);
+        array_pop($this->openGroups);
     }
 
     // ==============================================================================
