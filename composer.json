@@ -13,5 +13,6 @@
         "files": ["src/functions.php"]
     },
     "bin": ["bin/mike"],
-    "license": "MIT"
+    "license": "MIT",
+    "minimum-stability": "dev"
 }
