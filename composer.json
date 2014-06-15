@@ -3,7 +3,7 @@
     "description": "mike - make for php without compromises",
     "require": {
         "php": ">=5.3.0",
-        "holgerk/jiggle": "dev-master"
+        "holgerk/jiggle": "@dev"
     },
     "require-dev": {
         "holgerk/simple-mock": "*"
