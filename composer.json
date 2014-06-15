@@ -3,10 +3,10 @@
     "description": "mike - make for php without compromises",
     "require": {
         "php": ">=5.3.0",
-        "holgerk/jiggle": "dev-master as 1.0.x-dev"
+        "holgerk/jiggle": "1.0.5"
     },
     "require-dev": {
-        "holgerk/simple-mock": "*"
+        "holgerk/simple-mock": "2.0.1"
     },
     "autoload": {
         "psr-0": {"Mike\\": "src/"},

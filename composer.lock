@@ -4,11 +4,11 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2601905aa2c814f9f20e629b9e34158a",
+    "hash": "64f12fdb22cfcdcdfba05d52da1f4d12",
     "packages": [
         {
             "name": "holgerk/jiggle",
-            "version": "dev-master",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/holgerk/php-jiggle.git",
@@ -68,17 +68,12 @@
         }
     ],
     "aliases": [
-        {
-            "alias": "1.0.x-dev",
-            "alias_normalized": "1.0.9999999.9999999-dev",
-            "version": "9999999-dev",
-            "package": "holgerk/jiggle"
-        }
+
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "holgerk/jiggle": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.3.0"
     },
