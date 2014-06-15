@@ -1,4 +1,19 @@
 
+Install
+=======
+
+Install the phar into to your bin directory:
+
+```
+curl -o ~/bin/mike https://raw.githubusercontent.com/holgerk/php-mike/master/build/mike.phar && chmod +x ~/bin/mike
+```
+
+...or using composer:
+
+```
+composer global require holgerk/mike:dev-master
+```
+
 
 Todos
 =====
